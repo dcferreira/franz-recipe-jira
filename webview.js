@@ -1,2 +1,16 @@
-"use strict";
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJwb2NrZXQvd2Vidmlldy5qcyIsInNvdXJjZXNDb250ZW50IjpbXX0=
+const path = require('path');
+
+
+// jira integration
+module.exports = Franz => {
+  Franz.onNotify(notification => {
+    if (typeof notification.title !== 'string') {
+      notification.title =
+        ((notification.title.props || {}).content || [])[0] || 'Messenger';
+    }
+
+    return notification;
+  });
+  // inject a single css file
+  Franz.injectCSS(path.join(__dirname, 'darkmode.css'));
+};
